@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[53]:
+# In[144]:
 
 
 import pandas as pd
@@ -19,18 +19,21 @@ from scipy.stats import gamma
 # **Duration - June 1, 2020 to July 26, 2020**
 # 
 
-# In[138]:
+# In[145]:
 
 
+covid_data = pd.read_csv('covid_dat_orig.csv')
+covid_data_actual = covid_data.iloc[:,1:].diff()
+covid_data.fillna(0, inplace=True)
 covid_combined = pd.DataFrame()
-covid_combined["date"] = covid_data_actual["Date"]
+covid_combined["date"] = covid_data["Date"]
 covid_combined['date'] = pd.to_datetime(covid_combined['date'])  
 covid_combined["cases"] = covid_data_actual["PA confirmed"] + covid_data_actual["RI confirmed"]
 covid_combined["deaths"] = covid_data_actual["PA deaths"] + covid_data_actual["RI deaths"]
 covid_combined = covid_combined.set_index(['date'])
 
 
-# In[139]:
+# In[146]:
 
 
 covid_jun_four = covid_combined.loc['2020-6-1':'2020-6-28']
@@ -61,7 +64,7 @@ deaths
 # print(deaths_alt)
 
 
-# In[140]:
+# In[147]:
 
 
 plt.figure(figsize=(16,8))
